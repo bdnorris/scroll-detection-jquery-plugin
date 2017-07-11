@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Detection jQuery Plugin Demo</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="info">0</div>
+
+      <div class="spacer"> </div>
+
+      <div class="object-one" data-scrollin data-scroll-offset="150">In the Viewport Already, Runs Never</div>
+
+      <div class="spacer"> </div>
+
+      <div class="object-two" data-scrollin data-scroll-offset="300" data-reset>Resets</div>
+
+      <div class="spacer"> </div>
+
+      <div class="object-three" data-scrollin data-scroll-offset="100" data-reverse>Up and Down</div>
+
+      <div class="spacer"> </div>
+
+      <div id="testing-id" class="object-three" data-scrollin>Runs Once</div>
+
+      <div class="spacer"> </div>
+    </div>
+
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="scroll-detection.js"></script>
+
+  </body>
+</html>
