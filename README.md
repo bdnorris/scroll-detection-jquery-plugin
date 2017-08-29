@@ -16,10 +16,12 @@ By placing data attributes on the elements, you pass the needed information to t
 
 Regardless of options passed, if the element is in the viewport on load, it will apply the class immediately without scroll. So you never have to worry about where the "fold" is.
 
-`<div class="object-one" data-scrollin data-scroll-offset="150">In the Viewport Already, Runs Never</div>
+```
+<div class="object-one" data-scrollin data-scroll-offset="150">In the Viewport Already, Runs Never</div>
 <div class="object-two" data-scrollin data-scroll-offset="300" data-reset>Resets</div>
 <div class="object-three" data-scrollin data-scroll-offset="100" data-reverse>Up and Down</div>
-<div id="testing-id" class="object-three" data-scrollin>Runs Once</div>`
+<div id="testing-id" class="object-three" data-scrollin>Runs Once</div>
+```
 
 ### Caveats
 
