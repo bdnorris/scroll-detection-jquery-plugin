@@ -5,7 +5,9 @@ var masterScrollPos = window.scrollY,
   // For debugging, select the info element so you can see how far you are from the top
   info = $(".info"),
   // Next is the window height
-  windowHeight = $(window).innerHeight();
+  windowHeight = $(window).innerHeight(),
+  // for scroll timeout
+  ticking = false;
 
 // An object constructor for each of your elements. It contains...
 function TransitionElem(element, correction) {
@@ -32,7 +34,10 @@ function TransitionElem(element, correction) {
 // Adding the transition function as a prototype method of the TransitionElem class
 TransitionElem.prototype = {
   elementEval: function(direction) {
-    /* Setup the first argument, take the window height, add it to the masterScrollPos which is how far the top of the window is from the top of the page, and you get a reference to the bottom of the window. Add a third of your element's height (this makes sure at least a third of the element is showing before the tranistion starts), then subtract scrollCorrection value you specified. This tells the element when to start transitioning. */
+    /* Setup the first argument, take the window height, add it to the masterScrollPos which is how far the top of the window is
+    from the top of the page, and you get a reference to the bottom of the window. Add a third of your element's height
+    (this makes sure at least a third of the element is showing before the tranistion starts), then subtract scrollCorrection
+    value you specified. This tells the element when to start transitioning. */
     let bottomOfVPOffset =
       windowHeight + masterScrollPos + this.height / 3 - this.scrollCorrection,
       // Second argument is simply how far the top of your element is from the top of the page.
@@ -45,28 +50,36 @@ TransitionElem.prototype = {
     counter = this.inCounter,
     reset = this.reset,
     reverse = this.reverse;
-    // IF the element's position is greater than or equal to the master scroll position AND is less than the bottom of the windows position, then we know at least a third of our element is inside the viewport! We're also making sure the transition hasn't already run (the counter is 0). OR if we manually send in the direction "in", OR IF all of the orginal things are true, AND the reset attribute exists.
+    /* IF the element's position is greater than or equal to the master scroll position AND is less than the bottom of the
+    windows position, then we know at least a third of our element is inside the viewport! We're also making sure the transition hasn't
+    already run (the counter is 0). OR if we manually send in the direction "in", OR IF all of the orginal things are true, AND the reset
+    attribute exists. */
     if (
       direction === "in" ||
-      (elementTop >= topOfVPOffset &&
-        elementTop <= bottomOfVPOffset &&
-        counter < 1) ||
+      (elementTop >= topOfVPOffset && elementTop <= bottomOfVPOffset && counter < 1) ||
       (elementTop >= topOfVPOffset && elementTop <= bottomOfVPOffset && (reset === true || reverse === true))
     ) {
-      // We could do a lot of things here, but let's just add a class and do the rest of our animations in CSS/Sass. We'll remove our initial out class and increment our counter.
+      /* We could do a lot of things here, but let's just add a class and do the rest of our animations in CSS/Sass.
+      We'll remove our initial out class and increment our counter. */
       $(this.elem).addClass("element-in");
       $(this.elem).removeClass("element-out");
       this.inCounter++;
+      console.log('in');
     }
-    // This is kind of a reset. IF we manually send in the direction OUT, or IF the object is outside the viewport AND it has the reset data attribute AND reverse is set to false, then we'll take out our in class and add back our out class, so this element can be transitioned again.
+    /* This is kind of a reset. IF we manually send in the direction OUT, or IF the object is outside the viewport AND it has the reset data
+    attribute AND reverse is set to false, then we'll take out our IN class and add back our OUT class, so this element can be transitioned again. */
     else if (
       direction === "out" ||
       (elementTop > topOfVPOffset && elementTop > bottomOfVPOffset && (reset === true || reverse === true)) ||
-          // let's see if this has reverse, we'll want to run element out only if it comes back into the viewport while scrolling up
+      // let's see if this has reverse, we'll want to run element out only if it comes back into the viewport while scrolling up
       (elementBottom > topOfVPOffset && counter > 0 && reset === false && reverse === true)
     ) {
       $(this.elem).addClass("element-out");
       $(this.elem).removeClass("element-in");
+      console.log('out');
+    }
+    else {
+      console.log('do nothing');
     }
   }
 };
@@ -82,26 +95,33 @@ $(document).ready(function() {
     let newObj = new TransitionElem(element, dataOffset ? dataOffset : 0);
     scrollElements.push(newObj);
 
-    // if the element is positioned less than the window height plus the window scroll position, then it's in the viewport onload, so run the elementIn function right now!
+    /* if the element is positioned less than the window height plus the window scroll position, then it's in the viewport onload,
+    so run the elementIn function right now! */
     if (
       newObj.pos.top < windowHeight + masterScrollPos &&
       newObj.pos.top > masterScrollPos
     ) {
       newObj.elementEval("in");
+      console.log(newObj);
+      console.log('in view');
     } else if (
       newObj.pos.top > masterScrollPos &&
       newObj.pos.top < masterScrollPos + windowHeight
     ) {
       newObj.elementEval("in");
+
     } else if (newObj.pos.top < masterScrollPos) {
       newObj.elementEval("out");
+
     } else {
       newObj.elementEval("out");
+
     }
   });
 });
 
-/* This function will run whenever the window size changes, so we can re-compute the height and top position of our elements (just in case they're responsive). It has a timeout, so it will wait until the user is done resizing. */
+/* This function will run whenever the window size changes, so we can re-compute the height and top position of our elements
+(just in case they're responsive). It has a timeout, so it will wait until the user is done resizing. */
 window.setTimeout(function() {
   $(window).resize(function() {
     windowHeight = $(window).innerHeight();
@@ -114,14 +134,17 @@ window.setTimeout(function() {
       scrollElements[i].pos = $(scrollElements[i].elem).offset();
       scrollElements[i].height = $(scrollElements[i].elem).outerHeight();
       if (scrollElements[i].pos.top < windowHeight) {
+        console.log('resized in')
         scrollElements[i].elementEval();
       }
     }
   });
 }, 300);
 
-// The scroll event listener. The function inside will run on every scrolled pixel.
-$(document).on("scroll", window, function() {
+
+
+// Reference: http://www.html5rocks.com/en/tutorials/speed/animations/
+function onScroll(scroll_pos) {
   // On each scroll, update how far we are from the top.
   masterScrollPos = window.scrollY;
   // Update the debugger
@@ -134,5 +157,18 @@ $(document).on("scroll", window, function() {
     i++
   ) {
     scrollElements[i].elementEval();
+  }
+}
+
+window.addEventListener("scroll", function(e) {
+  last_known_scroll_position = window.scrollY;
+
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      onScroll(last_known_scroll_position);
+      ticking = false;
+    });
+
+    ticking = true;
   }
 });
