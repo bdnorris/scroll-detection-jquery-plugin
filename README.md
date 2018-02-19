@@ -1,4 +1,4 @@
-# scroll-detection-jquery-plugin
+# scroll-detection-script
 
 ## Script to detect when elements enter the viewport and add classes so you can animate with CSS.
 
@@ -27,4 +27,4 @@ Regardless of options passed, if the element is in the viewport on load, it will
 
 The script hasn't yet been throughly tested in a production environment. Stay tuned for any necessary changes, likely name changes and setup option changes. I also hope to un-jquery it someday to allow it to work anywhere.
 
-I also realize calling this a "plugin" is probably misleading, in that it does not actually extend jQuery and is not a new, chain-able, method——merely a script with jQuery as a dependency. I will revisit the name as well.
+Another issue is since I cache everything and evaluate on load, items that are already in the viewport get their classes added immediately. This means CSS Transitions don't work, but CSS Keyframe animations do. Next step is to try and wait for evaluation until scroll.
