@@ -8,38 +8,50 @@ body { background-color: #a8c7cb; font-size: 16px; }
 
 .info { position: fixed; right: 0; top: 0; padding: 1em; }
 
-.object { padding: 1em; margin: 1em; line-height: 1.3; color: #F6F6F6; text-transform: uppercase; display: flex; justify-content: center; align-items: center; letter-spacing: 0.1em; }
+.object { padding: 1em; margin: 1em; line-height: 1.3; color: #F6F6F6; text-transform: uppercase; display: -webkit-box; display: flex; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; letter-spacing: 0.1em; }
 
 .object-one { height: 10em; width: 10em; transition: background-color 1s ease; }
 
 .object-one.element-out { background-color: #699EA4; }
 
-.object-one.element-in { background-color: #37445E; animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+.object-one.element-in { background-color: #37445E; -webkit-animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
 
-.object-two { background-color: #9C1627; padding: 2em; height: 10vw; width: 10vw; border-radius: 50%; transition: opacity 1s ease, transform 800ms ease; }
+.object-two { background-color: #9C1627; padding: 2em; height: 10vw; width: 10vw; border-radius: 50%; transition: opacity 1s ease, -webkit-transform 800ms ease; transition: opacity 1s ease, transform 800ms ease; transition: opacity 1s ease, transform 800ms ease, -webkit-transform 800ms ease; }
 
-.object-two.element-out { opacity: 0; transform: skew(15deg, 15deg); }
+.object-two.element-out { opacity: 0; -webkit-transform: skew(15deg, 15deg); transform: skew(15deg, 15deg); }
 
-.object-two.element-in { opacity: 1; transform: skey(0, 0); }
+.object-two.element-in { opacity: 1; -webkit-transform: skey(0, 0); transform: skey(0, 0); }
 
-.object-three { background-color: #37445E; padding: 2em; text-align: center; height: 8em; width: 8em; transition: transform 1s ease; }
+.object-three { background-color: #37445E; padding: 2em; text-align: center; height: 8em; width: 8em; transition: -webkit-transform 1s ease; transition: transform 1s ease; transition: transform 1s ease, -webkit-transform 1s ease; }
 
-.object-three.element-out { transform: translateX(-400px); }
+.object-three.element-out { -webkit-transform: translateX(-400px); transform: translateX(-400px); }
 
-.object-three.element-in { transform: translateX(0); }
+.object-three.element-in { -webkit-transform: translateX(0); transform: translateX(0); }
 
-.object-four { background-color: #9C1627; padding: 2em; text-align: center; border-radius: 50%; height: 8em; width: 8em; transform-origin: center center; }
+.object-four { background-color: #9C1627; padding: 2em; text-align: center; border-radius: 50%; height: 8em; width: 8em; -webkit-transform-origin: center center; transform-origin: center center; }
 
-.object-four.element-in { animation: roll-in 1200ms ease-out both; }
+.object-four.element-in { -webkit-animation: roll-in 1200ms ease-out both; animation: roll-in 1200ms ease-out both; }
 
-@keyframes scale-in-center { from { transform: scale(0); }
-  to { transform: scale(1); } }
+@-webkit-keyframes scale-in-center { from { -webkit-transform: scale(0); transform: scale(0); }
+  to { -webkit-transform: scale(1); transform: scale(1); } }
 
-@keyframes roll-in { 0% { transform: translateX(-800px) rotate(-540deg);
+@keyframes scale-in-center { from { -webkit-transform: scale(0); transform: scale(0); }
+  to { -webkit-transform: scale(1); transform: scale(1); } }
+
+@-webkit-keyframes roll-in { 0% { -webkit-transform: translateX(-800px) rotate(-540deg); transform: translateX(-800px) rotate(-540deg);
     opacity: 0; }
-  80% { transform: translateX(1em) rotate(0deg);
+  80% { -webkit-transform: translateX(1em) rotate(0deg); transform: translateX(1em) rotate(0deg);
     opacity: 1; }
-  90% { transform: translateX(0.6em) rotate(6deg);
+  90% { -webkit-transform: translateX(0.6em) rotate(6deg); transform: translateX(0.6em) rotate(6deg);
     opacity: 1; }
-  100% { transform: translateX(0) rotate(0deg);
+  100% { -webkit-transform: translateX(0) rotate(0deg); transform: translateX(0) rotate(0deg);
+    opacity: 1; } }
+
+@keyframes roll-in { 0% { -webkit-transform: translateX(-800px) rotate(-540deg); transform: translateX(-800px) rotate(-540deg);
+    opacity: 0; }
+  80% { -webkit-transform: translateX(1em) rotate(0deg); transform: translateX(1em) rotate(0deg);
+    opacity: 1; }
+  90% { -webkit-transform: translateX(0.6em) rotate(6deg); transform: translateX(0.6em) rotate(6deg);
+    opacity: 1; }
+  100% { -webkit-transform: translateX(0) rotate(0deg); transform: translateX(0) rotate(0deg);
     opacity: 1; } }
