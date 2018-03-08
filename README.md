@@ -5,6 +5,9 @@
 ### Dependencies
 * jQuery
 
+### Demo
+https://bdnorris.github.io/scroll-detection-script/
+
 ### Usage
 
 By placing data attributes on the elements, you pass the needed information to the script. Uses classes **element-in** and  **element-out** to allow you to trigger CSS animations and transitions.
