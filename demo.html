@@ -3,37 +3,38 @@
   <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scroll Detection jQuery Plugin Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous" />
     <link rel="stylesheet" href="styles/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
   </head>
 
   <body>
 
     <div class="container">
+
       <div class="info">0</div>
 
       <div class="spacer"> </div>
 
-      <div class="object-one" data-scrollin data-scroll-offset="150">In the Viewport Already, Transitions won't fire, but Animations will.</div>
+      <div class="object object-one" data-scrollin data-scroll-offset="150"><span>In the Viewport Already: Transitions won't fire, but Animations will</span></div>
 
       <div class="spacer"> </div>
 
-      <div class="object-two" data-scrollin data-scroll-offset="300" data-reset>Resets</div>
+      <div class="object object-two" data-scrollin data-scroll-offset="300" data-reset><span>Resets: Will run again if you scroll up, then back down</span></div>
 
       <div class="spacer"> </div>
 
-      <div class="object-three" data-scrollin data-scroll-offset="100" data-reverse>Up and Down</div>
+      <div class="object object-three" data-scrollin data-scroll-offset="100" data-reverse><span>Runs in both scroll directions</span></div>
 
       <div class="spacer"> </div>
 
-      <div id="testing-id" class="object-three" data-scrollin>Runs Once</div>
+      <div id="testing-id" class="object object-four" data-scrollin><span>Runs Once</span></div>
 
       <div class="spacer"> </div>
+
     </div>
 
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="scroll-detection.js"></script>
 
   </body>
