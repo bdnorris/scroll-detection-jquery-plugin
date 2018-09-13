@@ -16,7 +16,7 @@ function TransitionElem(element, correction) {
   // its computed height as a number,
   (this.height = $(element).outerHeight()),
   // as well as a custom offset in in pixels, increase if you want the change of the object to happen later.
-  (this.scrollCorrection = correction),
+  (this.scrollCorrection = parseInt(correction)),
   // Also, get this element's position from the top of the page
   (this.pos = $(element).offset()),
   // Find out if the data-reset attribute exists, and set this prop to true if so. This allows us to reset the transition on an item if the user scrolls back up then down.
@@ -91,14 +91,18 @@ $(document).ready(function() {
 
   // For every element you've placed a data-scroll attribute on, create a new Object using the above constructor. Push that to the scrollElements array.
   $("[data-scrollin]").each(function(index, element) {
-    let dataOffset = $(this).attr("data-scroll-offset");
+    let dataOffset = $(this).attr('data-scroll-offset');
     let newObj = new TransitionElem(element, dataOffset ? dataOffset : 0);
     scrollElements.push(newObj);
 
     /* if the element is positioned less than the window height plus the window scroll position, then it's in the viewport onload,
     so run the elementIn function right now! */
+    // console.log('top', newObj.pos.top);
+    // console.log('window height', windowHeight);
+    // console.log('master scroll position', masterScrollPos);
+    // console.log('scroll correction', newObj.scrollCorrection);
     if (
-      newObj.pos.top < windowHeight + masterScrollPos &&
+      newObj.pos.top < windowHeight + masterScrollPos - newObj.scrollCorrection &&
       newObj.pos.top > masterScrollPos
     ) {
       newObj.elementEval("in");
@@ -106,7 +110,7 @@ $(document).ready(function() {
       console.log('in view');
     } else if (
       newObj.pos.top > masterScrollPos &&
-      newObj.pos.top < masterScrollPos + windowHeight
+      newObj.pos.top < masterScrollPos + windowHeight - newObj.scrollCorrection
     ) {
       newObj.elementEval("in");
 
